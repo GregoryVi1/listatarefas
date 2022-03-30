@@ -7,14 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
+import { NovaTarefaComponent } from 'src/app/shared/nova-tarefa/nova-tarefa.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    HomePageRoutingModule    
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, NovaTarefaComponent]
 })
 export class HomePageModule {}
