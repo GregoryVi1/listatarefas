@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
+import { Tarefa } from 'src/app/modelos/tarefa';
 
 @Component({
   selector: 'app-nova-tarefa',
@@ -8,13 +9,13 @@ import { AlertController, ToastController } from '@ionic/angular';
 })
 export class NovaTarefaComponent implements OnInit {
 
-  constructor(public alertController: AlertController, 
-              public toastController: ToastController) {}
+  constructor(public alertController: AlertController,
+    public toastController: ToastController) { }
 
 
-  nomeTarefa: String = '';
+  tarefa: Tarefa = new Tarefa();
 
-  listaDeTarefas: Array<String> = [];
+  listaDeTarefas: Array<Tarefa> = [];
 
   ngOnInit() { }
 
@@ -46,16 +47,31 @@ export class NovaTarefaComponent implements OnInit {
   //3 - Limpar a tarefa a tarefa atual
 
   addNovaTarefa(): void {
-    if (this.nomeTarefa == '') {
-     
-     this.presentAlert('Atenção', '', 'Informe o nome da tarefa');
-      // alert('Informe o nome da tarefa');
+    if (this.tarefa.nome == undefined || this.tarefa.nome == '') {
+
+      this.presentAlert('Atenção', '', 'Informe o nome da tarefa');
       return;
     }
 
-    this.listaDeTarefas.push(this.nomeTarefa);
-    this.nomeTarefa = '';
+    this.tarefa.idStatus = 1;
+    this.tarefa.prioridade = this.listaDeTarefas.length;
+    this.tarefa.obterIcone();
+
+    this.listaDeTarefas.push(this.tarefa);
+    this.tarefa == null;
+    this.tarefa = new Tarefa();
     this.presentToast();
   }
 
+  validarStatus(event: any) {
+    debugger;
+
+    console.log(event);
+    // this.idStatus = 3;
+    // this.obterIcone();
+  }
+
+  radioChecked(dados){
+    debugger;
+  }
 }
