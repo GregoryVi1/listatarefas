@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
 import { Tarefa } from 'src/app/modelos/tarefa';
+import { TarefaServico } from 'src/app/servico/tarefa-servico';
 
 @Component({
   selector: 'app-nova-tarefa',
@@ -10,14 +11,17 @@ import { Tarefa } from 'src/app/modelos/tarefa';
 export class NovaTarefaComponent implements OnInit {
 
   constructor(public alertController: AlertController,
-    public toastController: ToastController) { }
+    public toastController: ToastController,
+    public tarefaServico: TarefaServico) { }
 
 
   tarefa: Tarefa = new Tarefa();
 
   listaDeTarefas: Array<Tarefa> = [];
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.tarefaServico.buscar().then(dados => this.listaDeTarefas = dados);
+  }
 
   async presentAlert(titulo: string, subtitulo: string, message: string) {
     const alert = await this.alertController.create({
@@ -58,6 +62,8 @@ export class NovaTarefaComponent implements OnInit {
     this.tarefa.obterIcone();
 
     this.listaDeTarefas.push(this.tarefa);
+    this.tarefaServico.salvar(this.tarefa);
+
     this.tarefa == null;
     this.tarefa = new Tarefa();
     this.presentToast();
